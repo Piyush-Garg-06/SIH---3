@@ -117,8 +117,8 @@ const Workers = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border mb-6">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+        <div className="bg-white p-4 rounded-lg shadow-sm border mb-6">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -127,17 +127,15 @@ const Workers = () => {
                   placeholder="Search workers..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all w-64"
                 />
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
                 <Filter className="w-5 h-5 text-gray-600" />
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="px-3 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
                 >
                   <option value="all">All Status</option>
                   <option value="active">Active</option>
@@ -145,6 +143,13 @@ const Workers = () => {
                 </select>
               </div>
             </div>
+            <button
+              onClick={() => navigate('/add-new-user')}
+              className="bg-blue-600 text-white px-4 py-2 rounded-full font-medium hover:bg-blue-700 transition-colors flex items-center"
+            >
+              <User className="w-4 h-4 mr-2" />
+              Add Worker
+            </button>
           </div>
         </div>
 

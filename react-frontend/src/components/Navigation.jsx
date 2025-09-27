@@ -77,19 +77,19 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav style={{ backgroundColor: '#00d5b1' }} className="text-white hidden md:block">
+      <nav style={{ backgroundColor: '#00d5b1' }} className="text-white hidden md:block shadow-md">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center py-2">
             {/* Left: Logo */}
-            <div className="flex-1 flex justify-start">
-              <Link to="/" className="text-xl font-bold">
+            <div className="flex items-center">
+              <Link to="/" className="text-xl font-bold flex items-center">
                 Kerala Health Portal
               </Link>
             </div>
 
             {/* Center: Navigation Links */}
-            <div className="flex-1 flex justify-center pl-20">
-              <ul className="flex space-x-8">
+            <div className="flex-grow flex justify-center">
+              <ul className="flex space-x-6">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
@@ -97,11 +97,11 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
                     <li key={item.path}>
                       <Link
                         to={item.path}
-                        className={`hover:bg-teal-700 px-3 py-2 rounded-md font-medium flex items-center transition-colors ${
+                        className={`hover:bg-teal-700 px-3 py-2 rounded-full font-medium flex items-center transition-colors text-sm ${
                           isActive ? 'bg-teal-700' : ''
                         }`}
                       >
-                        <Icon className="mr-1 w-4 h-4" />
+                        <Icon className="mr-2 w-5 h-5" />
                         {item.label}
                       </Link>
                     </li>
@@ -111,19 +111,19 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
             </div>
 
             {/* Right: User Info & Logout */}
-            <div className="flex-1 flex justify-end items-center space-x-4">
+            <div className="flex items-center space-x-4">
               {user && (
                 <>
-                  <div className="flex items-center space-x-2">
-                    <User className="w-4 h-4" />
-                    <span className="text-sm">{user.name}</span>
-                    <span className="bg-teal-600 px-2 py-1 rounded text-xs capitalize">
-                      {user.userType}
-                    </span>
+                  <div className="flex items-center space-x-2 border-r border-teal-400 pr-4">
+                    <User className="w-5 h-5" />
+                    <div className="flex flex-col text-xs">
+                      <span className="font-semibold">{user.name}</span>
+                      <span className="capitalize">{user.userType}</span>
+                    </div>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md font-medium flex items-center transition-colors"
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-full font-medium flex items-center transition-colors text-sm"
                   >
                     <LogOut className="mr-1 w-4 h-4" />
                     Logout
