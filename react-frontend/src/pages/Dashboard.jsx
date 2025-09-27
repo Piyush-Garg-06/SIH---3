@@ -34,7 +34,26 @@ const Dashboard = () => {
           console.log('Dashboard data stats:', data.stats);
           console.log('Dashboard data cards:', data.cards);
           console.log('Dashboard data alerts:', data.alerts);
-          setDashboardData(data);
+          setDashboardData(data => ({
+            ...data,
+            cards: [
+              ...data.cards,
+              {
+                title: 'View Profile / Health Card',
+                description: 'Access your profile and health card.',
+                path: '/healthcard',
+                icon: 'User',
+                color: 'blue'
+              },
+              {
+                title: 'Contact Support',
+                description: 'Get help and support.',
+                path: '/contact',
+                icon: 'Shield',
+                color: 'purple'
+              }
+            ]
+          }));
         }
       } catch (error) {
         console.error('Failed to fetch dashboard data', error);
