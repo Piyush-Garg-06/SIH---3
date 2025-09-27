@@ -9,6 +9,8 @@
     "dev": "nodemon server.js",
     "test": "mocha --require @babel/register --timeout 5000",
     "seed": "node seed.js",
+    "seed:all": "node seedAll.js",
+    "seed:hospitals": "node seedHospitals.js",
     "seed:specific": "node seedSpecific.js",
     "seed:destroy": "node seed.js -d"
   },

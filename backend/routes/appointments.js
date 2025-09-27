@@ -1,22 +1,37 @@
 import express from 'express';
-import { getAppointments, createAppointment, updateAppointment, deleteAppointment, getAppointmentsForUser } from '../controllers/appointments.js';
+import { getAppointments, getAppointmentsForUser, createAppointment, updateAppointment, deleteAppointment, getAppointmentById } from '../controllers/appointments.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all appointments for the logged-in user
+// @route   GET /api/appointments
+// @desc    Get all appointments for the logged-in user
+// @access  Private
 router.get('/', auth, getAppointments);
 
-// Get all appointments for a specific user
+// @route   GET /api/appointments/:id
+// @desc    Get a specific appointment by ID
+// @access  Private
+router.get('/:id', auth, getAppointmentById);
+
+// @route   GET /api/appointments/user/:userId
+// @desc    Get all appointments for a specific user
+// @access  Private
 router.get('/user/:userId', auth, getAppointmentsForUser);
 
-// Create a new appointment (Worker only)
+// @route   POST /api/appointments
+// @desc    Create a new appointment
+// @access  Private
 router.post('/', auth, createAppointment);
 
-// Update an appointment (Worker or Doctor who owns it)
+// @route   PUT /api/appointments/:id
+// @desc    Update an appointment
+// @access  Private
 router.put('/:id', auth, updateAppointment);
 
-// Delete an appointment (Worker or Doctor who owns it)
+// @route   DELETE /api/appointments/:id
+// @desc    Delete an appointment
+// @access  Private
 router.delete('/:id', auth, deleteAppointment);
 
 export default router;
