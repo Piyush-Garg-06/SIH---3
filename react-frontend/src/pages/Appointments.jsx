@@ -57,14 +57,14 @@ const Appointments = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium inline-flex items-center"
           >
             <PlusCircle className="w-4 h-4 mr-2" />
-            Schedule New Appointment
+            Request new appointment
           </Link>
         </div>
 
         {appointments.length === 0 ? (
           <div className="text-center text-gray-600">
             <p className="text-lg">No upcoming appointments found.</p>
-            <p className="text-sm mt-2">You can schedule a new appointment using the button above.</p>
+            <p className="text-sm mt-2">You can request a new appointment using the button above.</p>
           </div>
         ) : (
           <div className="space-y-6">

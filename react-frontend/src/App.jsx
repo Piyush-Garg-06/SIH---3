@@ -40,6 +40,14 @@ import EmitraDashboard from './pages/emitra/EmitraDashboard';
 import EmitraProfile from './pages/emitra/EmitraProfile';
 import EmitraStatus from './pages/emitra/EmitraStatus';
 
+// Import test component
+import TestApi from './pages/TestApi';
+
+// Import doctor components
+import DoctorAppointments from './pages/DoctorAppointments';
+import DoctorNotifications from './pages/DoctorNotifications';
+import ViewAppointment from './pages/ViewAppointment';
+
 function App() {
   return (
     <AuthProvider>
@@ -58,6 +66,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/government-schemes" element={<GovernmentSchemesPage />} />
               <Route path="/simple-test" element={<SimpleTest />} />
+              <Route path="/test-api" element={<TestApi />} />
               
               {/* QR Scanner and Health Info Display - Public for emergency access */}
               <Route path="/health-info" element={<HealthInfoDisplay />} />
@@ -92,6 +101,11 @@ function App() {
                 <Route path="/severity-assessment" element={<SeverityAssessment />} />
                 <Route path="/test-user" element={<TestUser />} />
                 <Route path="/workers" element={<Workers />} />
+                
+                {/* Doctor specific routes */}
+                <Route path="/doctor/appointments" element={<DoctorAppointments />} />
+                <Route path="/doctor/notifications" element={<DoctorNotifications />} />
+                <Route path="/doctor/appointments/:appointmentId" element={<ViewAppointment />} />
               </Route>
             </Routes>
           </main>

@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/useAuth';
 import {
   Home, Info, Heart, CreditCard, UserPlus, Briefcase, Mail,
   Stethoscope, Users, Shield, Bell, FileText, Calendar,
-  LogOut, User, X
+  LogOut, User, X, Building, Upload
 } from 'lucide-react';
 
 const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
@@ -54,19 +54,17 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
         ];
       case 'admin':
         return [
-          { path: '/dashboard', label: 'Dashboard', icon: Home },
-          { path: '/workers', label: 'All Workers', icon: Users },
-          { path: '/doctors', label: 'Doctors', icon: Stethoscope },
-          { path: '/employers', label: 'Employers', icon: Briefcase },
-          { path: '/health-monitoring', label: 'Health Monitoring', icon: Shield },
-          { path: '/reports', label: 'System Reports', icon: FileText },
+          { path: '/admin/dashboard', label: 'Dashboard', icon: Home },
+          { path: '/add-new-patient', label: 'Add New Patient', icon: UserPlus },
+          { path: '/admin/send-data', label: 'Send Data', icon: Upload },
+          { path: '/admin/notifications', label: 'Notifications', icon: Bell },
         ];
       case 'emitra':
         return [
-          { path: '/emitra', label: 'Dashboard', icon: Home },
+          { path: '/emitra/dashboard', label: 'Dashboard', icon: Home },
           { path: '/emitra/status', label: 'Check Status', icon: FileText },
-          { path: '/notifications', label: 'Notifications', icon: Bell },
           { path: '/emitra/profile', label: 'Profile', icon: User },
+          { path: '/notifications', label: 'Notifications', icon: Bell },
         ];
       default:
         return [];
@@ -79,41 +77,31 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
   return (
     <>
       {/* Desktop Navigation */}
-      <nav style={{ backgroundColor: '#00d5b1' }} className="text-white hidden md:block shadow-md">
+      <nav style={{ backgroundColor: '#00d5b1' }} className="text-white hidden md:block">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center py-2">
+          <div className="flex justify-between items-center">
             {/* Left: Logo */}
-<<<<<<< HEAD
-            <div className="flex items-center">
-              <Link to="/" className="text-xl font-bold flex items-center">
-=======
             <div className="flex-1 flex justify-start">
-              <Link to="/" className="text-xl font-bold ml-[50px]">
->>>>>>> 28e9059ec9069bcc9bea7c4ab58c5f8bf6141060
+              <Link to="/" className="text-xl font-bold">
                 Kerala Health Portal
               </Link>
             </div>
 
             {/* Center: Navigation Links */}
-<<<<<<< HEAD
-            <div className="flex-grow flex justify-center">
-              <ul className="flex space-x-6">
-=======
-            <div className="flex-1 flex justify-center pl-40">
-              <ul className="flex space-x-[60px]">
->>>>>>> 28e9059ec9069bcc9bea7c4ab58c5f8bf6141060
+            <div className="flex-1 flex justify-center pl-20">
+              <ul className="flex space-x-8">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
                   return (
-                    <li key={item.path} className={item.label === 'Contact' || item.label === 'Services' || item.label === 'About' || item.label === 'Home' ? 'ml-[20px]' : ''}>
+                    <li key={item.path}>
                       <Link
                         to={item.path}
-                        className={`hover:bg-teal-700 px-3 py-2 rounded-full font-medium flex items-center transition-colors text-sm ${
+                        className={`hover:bg-teal-700 px-3 py-2 rounded-md font-medium flex items-center transition-colors ${
                           isActive ? 'bg-teal-700' : ''
                         }`}
                       >
-                        <Icon className="mr-2 w-5 h-5" />
+                        <Icon className="mr-1 w-4 h-4" />
                         {item.label}
                       </Link>
                     </li>
@@ -123,19 +111,19 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
             </div>
 
             {/* Right: User Info & Logout */}
-            <div className="flex items-center space-x-4">
+            <div className="flex-1 flex justify-end items-center space-x-4">
               {user && (
                 <>
-                  <div className="flex items-center space-x-2 border-r border-teal-400 pr-4">
-                    <User className="w-5 h-5" />
-                    <div className="flex flex-col text-xs">
-                      <span className="font-semibold">{user.name}</span>
-                      <span className="capitalize">{user.userType}</span>
-                    </div>
+                  <div className="flex items-center space-x-2">
+                    <User className="w-4 h-4" />
+                    <span className="text-sm">{user.name}</span>
+                    <span className="bg-teal-600 px-2 py-1 rounded text-xs capitalize">
+                      {user.userType}
+                    </span>
                   </div>
                   <button
                     onClick={handleLogout}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-full font-medium flex items-center transition-colors text-sm"
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md font-medium flex items-center transition-colors"
                   >
                     <LogOut className="mr-1 w-4 h-4" />
                     Logout

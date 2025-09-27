@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/useAuth';
-import { LogIn, Smartphone, Shield, Heart, Users, ShieldCheck, Eye, EyeOff, Stethoscope, Building2, UserCheck, Star, Award } from 'lucide-react';
+import { LogIn, Smartphone, Shield, Heart, Users, ShieldCheck, Eye, EyeOff, Stethoscope, Building2, UserCheck, Star, Award, Building } from 'lucide-react';
 import api from '../utils/api.js';
 
 const Login = () => {
@@ -20,10 +20,10 @@ const Login = () => {
 
   // Background images for the hero section
   const backgroundImages = [
-    'https://www.shutterstock.com/image-photo/mumbaiindia-may-21-2020-migrant-260nw-1737637544.jpg',
-    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://i.pinimg.com/474x/28/22/f3/2822f3144657aed3c9868eb4c9507113.jpg',
-    'https://www.shutterstock.com/image-photo/cybersecurity-business-digital-age-tech-600nw-2471160153.jpg'
+    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
   ];
 
   // Animation on component mount
@@ -65,7 +65,8 @@ const Login = () => {
         // Navigate to appropriate dashboard
         const dashboardPath = res.user.role === 'doctor' ? '/dashboard' : 
                              res.user.role === 'employer' ? '/dashboard' : 
-                             res.user.role === 'admin' ? '/dashboard' : '/dashboard';
+                             res.user.role === 'admin' ? '/dashboard' : 
+                             res.user.role === 'emitra' ? '/emitra/dashboard' : '/dashboard';
         navigate(dashboardPath);
       } else {
         throw new Error('Invalid response from server');
@@ -94,6 +95,7 @@ const Login = () => {
       case 'doctor': return <Stethoscope className="w-5 h-5" />;
       case 'employer': return <Building2 className="w-5 h-5" />;
       case 'admin': return <UserCheck className="w-5 h-5" />;
+      case 'emitra': return <Building className="w-5 h-5" />;
       default: return <Users className="w-5 h-5" />;
     }
   };
@@ -216,6 +218,7 @@ const Login = () => {
                         <option value="doctor">Doctor/Healthcare Provider</option>
                         <option value="employer">Employer/Manager</option>
                         <option value="admin">Administrator</option>
+                        <option value="emitra">eMitra Operator</option>
                       </select>
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <div className="text-blue-600">
@@ -228,7 +231,7 @@ const Login = () => {
                   {/* Email/ID Input with Animation */}
                   <div className="transform transition-all duration-300 hover:scale-105">
                     <label htmlFor="emailOrId" className="block text-sm font-medium text-gray-700 mb-2 transition-colors duration-300">
-                      Email or Health ID
+                      {formData.userType === 'emitra' ? 'Email or Operator ID' : 'Email or Health ID'}
                     </label>
                     <input
                       id="emailOrId"
@@ -238,7 +241,7 @@ const Login = () => {
                       value={formData.emailOrId}
                       onChange={handleChange}
                       className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white hover:border-blue-400 transition-all duration-300 hover:shadow-md focus:scale-105"
-                      placeholder="Enter your email or health ID"
+                      placeholder={formData.userType === 'emitra' ? 'Enter your email or operator ID' : 'Enter your email or health ID'}
                     />
                   </div>
 

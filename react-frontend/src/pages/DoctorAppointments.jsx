@@ -47,12 +47,20 @@ const DoctorAppointments = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold text-blue-900 mb-6">Your Appointments</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-blue-900">Your Appointments</h1>
+          <button
+            onClick={() => navigate('/')}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+          >
+            Request new appointment
+          </button>
+        </div>
 
         {appointments.length === 0 ? (
           <div className="text-center text-gray-600">
             <p className="text-lg">No upcoming appointments found.</p>
-            <p className="text-sm mt-2">Check back later or schedule new appointments.</p>
+            <p className="text-sm mt-2">Check back later or request new appointments.</p>
           </div>
         ) : (
           <div className="space-y-6">
