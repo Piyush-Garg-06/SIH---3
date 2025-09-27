@@ -97,18 +97,18 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white shadow-lg">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-blue-900">{dashboardData.title}</h1>
-              <p className="text-gray-600 mt-1">{dashboardData.subtitle}</p>
+              <h1 className="text-3xl font-bold">{dashboardData.title}</h1>
+              <p className="text-blue-200 mt-1">{dashboardData.subtitle}</p>
               <div className="flex items-center mt-2">
-                <span className="text-sm text-gray-500">Welcome,</span>
+                <span className="text-sm text-blue-300">Welcome,</span>
                 {user && user.name ? (
-                  <span className="text-lg font-semibold text-blue-800 ml-1">{user.name}</span>
+                  <span className="text-lg font-semibold ml-1">{user.name}</span>
                 ) : (
-                  <span className="text-lg font-semibold text-blue-800 ml-1">User</span>
+                  <span className="text-lg font-semibold ml-1">User</span>
                 )}
                 {user && user.userType ? (
                   <span className={`ml-3 px-3 py-1 rounded-full text-xs font-semibold capitalize
@@ -129,7 +129,7 @@ const Dashboard = () => {
             </div>
             <button
               onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded-md font-medium hover:bg-red-700 flex items-center transition-colors"
+              className="bg-red-600 text-white px-4 py-2 rounded-md font-medium hover:bg-red-700 flex items-center transition-all duration-300 transform hover:scale-105"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
@@ -152,7 +152,7 @@ const Dashboard = () => {
             }
             
             return (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-sm border">
+              <div key={index} className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 transform hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-600">{stat.label}</p>
@@ -173,13 +173,13 @@ const Dashboard = () => {
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Important Alerts</h2>
             <div className="space-y-3">
               {dashboardData.alerts.map((alert, index) => (
-                <div key={index} className={`p-4 rounded-lg border-l-4 ${getAlertColor(alert.type)}`}>
+                <div key={index} className={`p-4 rounded-lg border-l-4 ${getAlertColor(alert.type)} shadow-md`}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <AlertTriangle className="w-5 h-5 mr-3" />
                       <span className="font-medium">{alert.message}</span>
                     </div>
-                    <button className="bg-white px-3 py-1 rounded text-sm font-medium hover:bg-gray-50 transition-colors">
+                    <button className="bg-white px-3 py-1 rounded text-sm font-medium hover:bg-gray-50 transition-colors shadow-sm border border-gray-300">
                       {alert.action}
                     </button>
                   </div>
@@ -207,7 +207,7 @@ const Dashboard = () => {
                 <Link
                   key={index}
                   to={card.path}
-                  className="bg-white p-6 rounded-lg shadow-sm border hover:shadow-md transition-shadow block"
+                  className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 block"
                 >
                   <div className={`w-12 h-12 ${getStatColor(card.color)} rounded-lg flex items-center justify-center mb-4`}>
                     {Icon ? <Icon className="w-6 h-6" /> : <div className="w-6 h-6 bg-gray-200 rounded-full" />}
@@ -220,21 +220,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Additional Actions */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Additional Actions</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <Link to="/healthcard" className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors">
-              View Profile / Health Card
-            </Link>
-            <Link to="/healthcard" className="bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition-colors">
-              View Health Card
-            </Link>
-            <Link to="/contact" className="bg-purple-600 text-white px-4 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-              Contact Support
-            </Link>
-          </div>
-        </div>
+
       </div>
     </div>
   );
