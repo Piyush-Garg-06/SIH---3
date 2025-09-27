@@ -18,6 +18,10 @@ const DoctorSchema = new mongoose.Schema({
   specialization: { type: String, required: true },
   clinicName: { type: String },
   clinicAddress: { type: String },
+  hospital: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Hospital'
+  }
 });
 
 DoctorSchema.virtual('name').get(function () {

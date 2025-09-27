@@ -4,6 +4,7 @@ import Doctor from '../models/Doctor.js';
 import Patient from '../models/Patient.js';
 import User from '../models/User.js'; // Import User model
 import dataService from '../services/dataService.js';
+import notificationService from '../services/notificationService.js';
 
 // @route   GET /api/appointments
 // @desc    Get all appointments for the logged-in user
@@ -59,6 +60,63 @@ export const getAppointmentsForUser = async (req, res) => {
     }
   };
 
+// @route   GET /api/appointments/:id
+// @desc    Get a specific appointment by ID
+// @access  Private
+export const getAppointmentById = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id)
+      .populate('worker', 'firstName lastName')
+      .populate('doctor', 'firstName lastName specialization')
+      .populate('patient', 'firstName lastName');
+
+    if (!appointment) {
+      return res.status(404).json({ msg: 'Appointment not found' });
+    }
+
+    // Check if user is authorized to view this appointment
+    const user = req.user;
+    const workerProfile = await Worker.findOne({ user: user.id });
+    const doctorProfile = await Doctor.findOne({ user: user.id });
+    const patientProfile = await Patient.findOne({ user: user.id });
+
+    // For doctors, check if they are the assigned doctor
+    const isAuthorizedDoctor = doctorProfile && appointment.doctor && 
+      appointment.doctor._id.toString() === doctorProfile._id.toString();
+    
+    // For workers, check if they are the requesting worker
+    const isAuthorizedWorker = workerProfile && appointment.worker && 
+      appointment.worker._id.toString() === workerProfile._id.toString();
+    
+    // For patients, check if they are the requesting patient
+    const isAuthorizedPatient = patientProfile && appointment.patient && 
+      appointment.patient._id.toString() === patientProfile._id.toString();
+
+    // Allow access if user is authorized
+    if (!isAuthorizedDoctor && !isAuthorizedWorker && !isAuthorizedPatient) {
+      console.log('User not authorized to view appointment:', {
+        userId: user.id,
+        userRole: user.role,
+        doctorProfileId: doctorProfile ? doctorProfile._id : null,
+        workerProfileId: workerProfile ? workerProfile._id : null,
+        patientProfileId: patientProfile ? patientProfile._id : null,
+        appointmentDoctorId: appointment.doctor ? appointment.doctor._id : null,
+        appointmentWorkerId: appointment.worker ? appointment.worker._id : null,
+        appointmentPatientId: appointment.patient ? appointment.patient._id : null
+      });
+      return res.status(401).json({ msg: 'User not authorized to view this appointment' });
+    }
+
+    res.json({ data: appointment });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Appointment not found' });
+    }
+    res.status(500).send('Server Error');
+  }
+};
+
 // @route   POST /api/appointments
 // @desc    Create a new appointment
 // @access  Private (Worker only)
@@ -73,8 +131,9 @@ export const createAppointment = async (req, res) => {
     }
 
     let profileId;
+    let workerProfile = null;
     if (user.role === 'worker') {
-      const workerProfile = await Worker.findOne({ user: user.id });
+      workerProfile = await Worker.findOne({ user: user.id });
       if (!workerProfile) {
         return res.status(404).json({ msg: 'Worker profile not found' });
       }
@@ -92,6 +151,9 @@ export const createAppointment = async (req, res) => {
       return res.status(404).json({ msg: 'Doctor not found' });
     }
 
+    // Get the doctor's user profile
+    const doctorUser = await User.findById(doctorProfile.user);
+    
     const newAppointment = new Appointment({
       worker: user.role === 'worker' ? profileId : null, // Link to worker if role is worker
       patient: user.role === 'patient' ? profileId : null, // Link to patient if role is patient
@@ -108,6 +170,24 @@ export const createAppointment = async (req, res) => {
     });
 
     const appointment = await newAppointment.save();
+    
+    // Send notification to doctor if this is a worker appointment
+    if (user.role === 'worker' && workerProfile && doctorUser) {
+      const appointmentDetails = {
+        date: new Date(date).toLocaleDateString(),
+        time,
+        type,
+        hospital
+      };
+      
+      await notificationService.sendAppointmentRequestNotification(
+        doctorUser,
+        workerProfile,
+        appointmentDetails,
+        appointment._id
+      );
+    }
+    
     res.json(appointment);
   } catch (err) {
     console.error(err.message);
