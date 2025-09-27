@@ -82,13 +82,13 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
           <div className="flex justify-between items-center">
             {/* Left: Logo */}
             <div className="flex-1 flex justify-start">
-              <Link to="/" className="text-xl font-bold">
+              <Link to="/" className="text-xl font-bold ml-4">
                 Kerala Health Portal
               </Link>
             </div>
 
             {/* Center: Navigation Links */}
-            <div className="flex-1 flex justify-center pl-20">
+            <div className="flex-1 flex justify-center">
               <ul className="flex space-x-8">
                 {navItems.map((item) => {
                   const Icon = item.icon;
@@ -99,7 +99,7 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
                         to={item.path}
                         className={`hover:bg-teal-700 px-3 py-2 rounded-md font-medium flex items-center transition-colors ${
                           isActive ? 'bg-teal-700' : ''
-                        }`}
+                        } ml-5`}
                       >
                         <Icon className="mr-1 w-4 h-4" />
                         {item.label}

@@ -20,10 +20,10 @@ const Login = () => {
 
   // Background images for the hero section
   const backgroundImages = [
-    'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
-    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80'
+    'https://i.guim.co.uk/img/media/ee2818deb4c2510c724abd001a1267663bebe10a/0_363_2962_1777/master/2962.jpg?width=465&dpr=1&s=none&crop=none',
+    'https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    'https://www.shutterstock.com/image-photo/cybersecurity-business-digital-age-tech-600nw-2471160153.jpg',
+    'https://i.pinimg.com/474x/28/22/f3/2822f3144657aed3c9868eb4c9507113.jpg'
   ];
 
   // Animation on component mount
