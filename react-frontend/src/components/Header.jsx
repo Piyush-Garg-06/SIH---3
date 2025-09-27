@@ -16,9 +16,12 @@ const Header = () => {
         <div className="container mx-auto px-4 flex items-center py-3">
           {/* Logo - leftmost */}
           <img
-            src="http://static.photos/government/120x120/1"
+            src="sihpic.jpg.png"
             alt="Kerala Government Logo"
             className="h-12 md:h-16"
+            height="100"
+            weight="100"
+            marginleft="50"
           />
 
           {/* Text - centered */}
@@ -35,14 +38,14 @@ const Header = () => {
               <div className="hidden md:flex items-center space-x-4">
                 <Link
                   to="/login"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md font-medium flex items-center transition-colors"
+                  className="bg-[#00d5b1] hover:bg-[#00bfa5] text-white px-4 py-2 rounded-md font-medium flex items-center transition-colors"
                 >
                   <User className="mr-2 w-5 h-5" />
                   Login
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md font-medium flex items-center transition-colors"
+                  className="bg-[#00d5b1] hover:bg-[#00bfa5] text-white px-4 py-2 rounded-md font-medium flex items-center transition-colors"
                 >
                   <UserPlus className="mr-2 w-5 h-5" />
                   Register

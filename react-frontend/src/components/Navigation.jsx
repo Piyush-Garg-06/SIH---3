@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/useAuth';
 import {
   Home, Info, Heart, CreditCard, UserPlus, Briefcase, Mail,
   Stethoscope, Users, Shield, Bell, FileText, Calendar,
-  LogOut, User, X, Building, Upload
+  LogOut, User, X
 } from 'lucide-react';
 
 const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
@@ -54,17 +54,19 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
         ];
       case 'admin':
         return [
-          { path: '/admin/dashboard', label: 'Dashboard', icon: Home },
-          { path: '/add-new-patient', label: 'Add New Patient', icon: UserPlus },
-          { path: '/admin/send-data', label: 'Send Data', icon: Upload },
-          { path: '/admin/notifications', label: 'Notifications', icon: Bell },
+          { path: '/dashboard', label: 'Dashboard', icon: Home },
+          { path: '/workers', label: 'All Workers', icon: Users },
+          { path: '/doctors', label: 'Doctors', icon: Stethoscope },
+          { path: '/employers', label: 'Employers', icon: Briefcase },
+          { path: '/health-monitoring', label: 'Health Monitoring', icon: Shield },
+          { path: '/reports', label: 'System Reports', icon: FileText },
         ];
       case 'emitra':
         return [
-          { path: '/emitra/dashboard', label: 'Dashboard', icon: Home },
+          { path: '/emitra', label: 'Dashboard', icon: Home },
           { path: '/emitra/status', label: 'Check Status', icon: FileText },
-          { path: '/emitra/profile', label: 'Profile', icon: User },
           { path: '/notifications', label: 'Notifications', icon: Bell },
+          { path: '/emitra/profile', label: 'Profile', icon: User },
         ];
       default:
         return [];
@@ -81,20 +83,30 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-2">
             {/* Left: Logo */}
+<<<<<<< HEAD
             <div className="flex items-center">
               <Link to="/" className="text-xl font-bold flex items-center">
+=======
+            <div className="flex-1 flex justify-start">
+              <Link to="/" className="text-xl font-bold ml-[50px]">
+>>>>>>> 28e9059ec9069bcc9bea7c4ab58c5f8bf6141060
                 Kerala Health Portal
               </Link>
             </div>
 
             {/* Center: Navigation Links */}
+<<<<<<< HEAD
             <div className="flex-grow flex justify-center">
               <ul className="flex space-x-6">
+=======
+            <div className="flex-1 flex justify-center pl-40">
+              <ul className="flex space-x-[60px]">
+>>>>>>> 28e9059ec9069bcc9bea7c4ab58c5f8bf6141060
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = location.pathname === item.path;
                   return (
-                    <li key={item.path}>
+                    <li key={item.path} className={item.label === 'Contact' || item.label === 'Services' || item.label === 'About' || item.label === 'Home' ? 'ml-[20px]' : ''}>
                       <Link
                         to={item.path}
                         className={`hover:bg-teal-700 px-3 py-2 rounded-full font-medium flex items-center transition-colors text-sm ${
