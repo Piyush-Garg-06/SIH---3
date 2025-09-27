@@ -99,7 +99,7 @@ const Navigation = ({ isSidebarOpen, setSidebarOpen }) => {
                         to={item.path}
                         className={`hover:bg-teal-700 px-3 py-2 rounded-md font-medium flex items-center transition-colors whitespace-nowrap ${
                           isActive ? 'bg-teal-700' : ''
-                        } ml-5`}
+                        } ml-8`}
                       >
                         <Icon className="mr-1 w-4 h-4" />
                         {item.label}
