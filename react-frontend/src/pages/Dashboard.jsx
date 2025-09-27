@@ -34,7 +34,26 @@ const Dashboard = () => {
           console.log('Dashboard data stats:', data.stats);
           console.log('Dashboard data cards:', data.cards);
           console.log('Dashboard data alerts:', data.alerts);
-          setDashboardData(data);
+          setDashboardData(data => ({
+            ...data,
+            cards: [
+              ...data.cards,
+              {
+                title: 'View Profile / Health Card',
+                description: 'Access your profile and health card.',
+                path: '/healthcard',
+                icon: 'User',
+                color: 'blue'
+              },
+              {
+                title: 'Contact Support',
+                description: 'Get help and support.',
+                path: '/contact',
+                icon: 'Shield',
+                color: 'purple'
+              }
+            ]
+          }));
         }
       } catch (error) {
         console.error('Failed to fetch dashboard data', error);
@@ -220,21 +239,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Additional Actions */}
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Additional Actions</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <Link to="/healthcard" className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors">
-              View Profile / Health Card
-            </Link>
-            <Link to="/healthcard" className="bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition-colors">
-              View Health Card
-            </Link>
-            <Link to="/contact" className="bg-purple-600 text-white px-4 py-2 rounded-md font-medium hover:bg-purple-700 transition-colors">
-              Contact Support
-            </Link>
-          </div>
-        </div>
+
       </div>
     </div>
   );
