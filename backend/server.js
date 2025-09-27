@@ -63,6 +63,7 @@ import patientsRoutes from './routes/patients.js'; // Import patients routes
 import notificationsRoutes from './routes/notifications.js';
 import adminRoutes from './routes/admin.js'; // Import admin routes
 import emitraRoutes from './routes/emitra.js'; // Import emitra routes
+import hospitalsRoutes from './routes/hospitals.js'; // Import hospitals routes
 
 app.use('/api/auth', authRoutes);
 app.use('/api/db', dbRoutes);
@@ -79,6 +80,7 @@ app.use('/api/patients', patientsRoutes); // Use patients routes
 app.use('/api/notifications', notificationsRoutes);
 app.use('/api/admin', adminRoutes); // Use admin routes
 app.use('/api/emitra', emitraRoutes); // Use emitra routes
+app.use('/api/hospitals', hospitalsRoutes); // Use hospitals routes
 
 const PORT = process.env.PORT || 5000;
 

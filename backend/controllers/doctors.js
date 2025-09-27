@@ -10,7 +10,7 @@ import bcrypt from 'bcryptjs';
 // @access  Private
 export const getDoctorProfile = async (req, res) => {
   try {
-    const doctor = await Doctor.findOne({ user: req.user.id }).populate('user', 'email');
+    const doctor = await Doctor.findOne({ user: req.user.id }).populate('user', 'email').populate('hospital', 'name location');
     if (!doctor) {
       return res.status(404).json({ msg: 'Doctor profile not found' });
     }
@@ -30,7 +30,7 @@ export const updateDoctorProfile = async (req, res) => {
       { user: req.user.id },
       req.body,
       { new: true }
-    ).populate('user', 'email');
+    ).populate('user', 'email').populate('hospital', 'name location');
     
     if (!doctor) {
       return res.status(404).json({ msg: 'Doctor profile not found' });
@@ -48,7 +48,7 @@ export const updateDoctorProfile = async (req, res) => {
 // @access  Public (or Private, depending on requirements)
 export const getDoctors = async (req, res) => {
   try {
-    const doctors = await Doctor.find().select('_id firstName lastName specialization');
+    const doctors = await Doctor.find().select('_id firstName lastName specialization hospital').populate('hospital', 'name');
     res.json(doctors);
   } catch (err) {
     console.error(err.message);

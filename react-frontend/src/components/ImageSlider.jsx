@@ -4,10 +4,10 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
   'https://ehealth.kerala.gov.in/themes/medicare_zymphonies_theme/images/slider/ehk1.jpg',
-  'https://c.ndtvimg.com/2020-04/gh9i74k8_up-migrant-workers-april-2020-pti_650x400_24_April_20.jpg',
+  'https://images.unsplash.com/photo-1581056781163-c76d58623528?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   'https://images.unsplash.com/photo-1603398938378-e54eab446dde?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   'https://images.unsplash.com/photo-1580281657527-47f249e8f4df?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkGvEcATQge-iWxlKX-mTwPGaDKsreW9OBRQ&s'
+  'https://images.unsplash.com/photo-1602216056096-3b404039b790?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
 ];
 
 const kenBurnsAnimations = [

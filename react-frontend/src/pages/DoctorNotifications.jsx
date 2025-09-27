@@ -7,13 +7,13 @@ import {
 import { useState, useEffect } from 'react';
 import api from '../utils/api';
 
-const Notifications = () => {
+const DoctorNotifications = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  if (!user) {
+  if (!user || user.role !== 'doctor') {
     navigate('/login');
     return null;
   }
@@ -107,6 +107,14 @@ const Notifications = () => {
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
+  if (loading) {
+    return <div className="text-center p-8">Loading notifications...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center p-8 text-red-600">Error: {error}</div>;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -114,8 +122,8 @@ const Notifications = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-blue-900">Notifications</h1>
-              <p className="text-gray-600 mt-1">Stay updated with your health alerts and important messages</p>
+              <h1 className="text-3xl font-bold text-blue-900">Doctor Notifications</h1>
+              <p className="text-gray-600 mt-1">Stay updated with appointment requests and health alerts</p>
             </div>
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2">
@@ -161,10 +169,6 @@ const Notifications = () => {
                 <option value="read">Read Only</option>
                 <option value="appointment">Appointments</option>
                 <option value="health_alert">Health Alerts</option>
-                <option value="vaccination">Vaccinations</option>
-                <option value="compliance">Compliance</option>
-                <option value="emergency">Emergency</option>
-                <option value="scheme">Schemes</option>
               </select>
             </div>
           </div>
@@ -260,57 +264,9 @@ const Notifications = () => {
             </div>
           )}
         </div>
-
-        {/* Notification Preferences */}
-        <div className="mt-8 bg-white p-6 rounded-lg shadow-sm border">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Notification Preferences</h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium text-gray-900 mb-3">Email Notifications</h4>
-              <div className="space-y-2">
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Appointment reminders</span>
-                </label>
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Health report updates</span>
-                </label>
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Emergency alerts</span>
-                </label>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-gray-900 mb-3">SMS Notifications</h4>
-              <div className="space-y-2">
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Checkup schedules</span>
-                </label>
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Vaccination reminders</span>
-                </label>
-                <label className="flex items-center">
-                  <input type="checkbox" defaultChecked className="mr-2" />
-                  <span className="text-sm text-gray-700">Compliance updates</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 flex justify-end">
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md font-medium hover:bg-blue-700 transition-colors">
-              Save Preferences
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Notifications;
+export default DoctorNotifications;

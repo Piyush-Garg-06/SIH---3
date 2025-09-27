@@ -1,5 +1,9 @@
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
+import Notification from '../models/Notification.js';
+import User from '../models/User.js';
+import Doctor from '../models/Doctor.js';
+import connectDB from '../config/db.js';
 
 class NotificationService {
   constructor() {
@@ -144,6 +148,76 @@ class NotificationService {
       console.log('Health update notification sent successfully');
     } catch (error) {
       console.error('Failed to send health update notification:', error);
+    }
+  }
+
+  // Send appointment request notification to doctor
+  async sendAppointmentRequestNotification(doctorUser, worker, appointmentDetails, appointmentId) {
+    try {
+      // Ensure database connection
+      // await connectDB();
+      
+      console.log('Creating notification for doctor:', doctorUser._id);
+      console.log('Appointment ID:', appointmentId);
+      
+      // Create in-app notification
+      const notification = new Notification({
+        userId: doctorUser._id,
+        title: 'New Appointment Request',
+        message: `New appointment request from ${worker.firstName} ${worker.lastName} for ${appointmentDetails.date} at ${appointmentDetails.time}`,
+        type: 'appointment',
+        priority: 'high',
+        actionUrl: `/doctor/appointments/${appointmentId}`,
+        actionText: 'View Appointment',
+        relatedType: 'appointment',
+        relatedId: appointmentId
+      });
+
+      const savedNotification = await notification.save();
+      console.log('Notification saved:', savedNotification._id);
+      console.log('Notification data:', savedNotification);
+      
+      // Send email notification if enabled
+      if (this.emailTransporter && doctorUser.email) {
+        const subject = 'New Appointment Request';
+        const html = `
+          <h3>New Appointment Request</h3>
+          <p>Dear Dr. ${doctorUser.firstName} ${doctorUser.lastName},</p>
+          <p>You have received a new appointment request with the following details:</p>
+          <ul>
+            <li><strong>Patient:</strong> ${worker.firstName} ${worker.lastName}</li>
+            <li><strong>Date:</strong> ${appointmentDetails.date}</li>
+            <li><strong>Time:</strong> ${appointmentDetails.time}</li>
+            <li><strong>Type:</strong> ${appointmentDetails.type}</li>
+            <li><strong>Hospital:</strong> ${appointmentDetails.hospital}</li>
+          </ul>
+          <p>Please log in to the system to review and confirm this appointment.</p>
+          <p>Best regards,<br>Digital Health Record Management System</p>
+        `;
+
+        try {
+          await this.sendEmail(doctorUser.email, subject, html);
+        } catch (error) {
+          console.error('Failed to send appointment request email to doctor:', error);
+        }
+      }
+
+      // Send SMS notification if enabled
+      if (this.twilioClient && doctorUser.mobile) {
+        const smsMessage = `New Appointment Request: ${worker.firstName} ${worker.lastName} requested an appointment for ${appointmentDetails.date} at ${appointmentDetails.time}. Please log in to review.`;
+
+        try {
+          await this.sendSMS(doctorUser.mobile, smsMessage);
+        } catch (error) {
+          console.error('Failed to send appointment request SMS to doctor:', error);
+        }
+      }
+
+      console.log('Appointment request notification sent to doctor');
+      return savedNotification;
+    } catch (error) {
+      console.error('Error creating notification:', error);
+      throw error;
     }
   }
 }
